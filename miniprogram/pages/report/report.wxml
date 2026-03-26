@@ -1,0 +1,49 @@
+<view class="container">
+  <!-- Month Picker -->
+  <view class="month-picker-container card">
+    <picker mode="date" fields="month" value="{{currentMonth}}" end="{{currentMonth}}" bindchange="onMonthChange">
+      <view class="picker-inner">
+        <text class="month-text">{{currentMonth}}</text>
+        <text class="picker-icon">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- Stats Cards -->
+  <view class="stats-container card">
+    <view class="stat-item">
+      <text class="stat-label">总支出</text>
+      <text class="stat-value expense">¥{{totalExpense}}</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-label">总收入</text>
+      <text class="stat-value income">¥{{totalIncome}}</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-label">结余</text>
+      <text class="stat-value balance">¥{{balance}}</text>
+    </view>
+  </view>
+
+  <!-- Pie Chart -->
+  <view class="chart-container card" wx:if="{{categoryData.length > 0}}">
+    <view class="chart-title">支出占比</view>
+    <canvas type="2d" id="pieCanvas" class="pie-canvas"></canvas>
+    
+    <!-- Category List -->
+    <view class="category-list">
+      <view class="category-list-item" wx:for="{{categoryData}}" wx:key="name">
+        <view class="category-color" style="background-color: {{colors[index % colors.length]}}"></view>
+        <text class="category-list-name">{{item.name}}</text>
+        <text class="category-list-value">¥{{item.value}}</text>
+        <text class="category-list-percent">{{item.percent}}%</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Empty State -->
+  <view class="empty-state" wx:if="{{categoryData.length === 0}}">
+    <image class="empty-img" src="https://picsum.photos/200/200?random=2"></image>
+    <text class="empty-text">本月暂无支出记录</text>
+  </view>
+</view>

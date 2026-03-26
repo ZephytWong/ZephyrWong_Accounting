@@ -1,0 +1,90 @@
+.month-picker-container {
+  display: flex;
+  justify-content: center;
+  padding: 20rpx;
+}
+
+.picker-inner {
+  display: flex;
+  align-items: center;
+}
+
+.month-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-right: 10rpx;
+  color: #07C160;
+}
+
+.picker-icon {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.advice-container {
+  margin-top: 20rpx;
+}
+
+.advice-swiper {
+  height: 800rpx;
+}
+
+.advice-card {
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.advice-bg {
+  width: 100%;
+  height: 400rpx;
+}
+
+.advice-content {
+  flex: 1;
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.advice-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+}
+
+.advice-text {
+  font-size: 32rpx;
+  color: #333333;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-img {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+}

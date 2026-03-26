@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/account/account",
+    "pages/report/report",
+    "pages/ai/ai"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#07C160",
+    "navigationBarTitleText": "记账",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#07C160",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/account/account",
+        "iconPath": "images/tabbar/account.png",
+        "selectedIconPath": "images/tabbar/account_active.png",
+        "text": "记账"
+      },
+      {
+        "pagePath": "pages/report/report",
+        "iconPath": "images/tabbar/report.png",
+        "selectedIconPath": "images/tabbar/report_active.png",
+        "text": "报表"
+      },
+      {
+        "pagePath": "pages/ai/ai",
+        "iconPath": "images/tabbar/ai.png",
+        "selectedIconPath": "images/tabbar/ai_active.png",
+        "text": "AI建议"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

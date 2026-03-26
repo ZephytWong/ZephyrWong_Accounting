@@ -1,0 +1,41 @@
+<view class="container">
+  <!-- Month Picker -->
+  <view class="month-picker-container card">
+    <picker mode="date" fields="month" value="{{currentMonth}}" end="{{currentMonth}}" bindchange="onMonthChange">
+      <view class="picker-inner">
+        <text class="month-text">{{currentMonth}} 智能分析</text>
+        <text class="picker-icon">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- AI Advice Carousel -->
+  <view class="advice-container" wx:if="{{advices.length > 0}}">
+    <swiper 
+      class="advice-swiper" 
+      indicator-dots="true" 
+      indicator-color="#e0e0e0" 
+      indicator-active-color="#07C160"
+      autoplay="true"
+      interval="5000"
+      duration="500"
+      circular="true"
+    >
+      <swiper-item wx:for="{{advices}}" wx:key="*this">
+        <view class="advice-card">
+          <image class="advice-bg" src="https://picsum.photos/400/300?random={{index}}" mode="aspectFill"></image>
+          <view class="advice-content">
+            <text class="advice-icon">💡</text>
+            <text class="advice-text">{{item}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- Empty State -->
+  <view class="empty-state" wx:if="{{advices.length === 0}}">
+    <image class="empty-img" src="https://picsum.photos/200/200?random=3"></image>
+    <text class="empty-text">暂无AI分析数据</text>
+  </view>
+</view>

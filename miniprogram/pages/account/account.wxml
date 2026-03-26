@@ -1,0 +1,65 @@
+<view class="container">
+  <!-- Type Switcher -->
+  <view class="type-switch">
+    <view class="type-item {{currentType === 'expense' ? 'active' : ''}}" bindtap="switchType" data-type="expense">支出</view>
+    <view class="type-item {{currentType === 'income' ? 'active' : ''}}" bindtap="switchType" data-type="income">收入</view>
+  </view>
+
+  <!-- Amount Input -->
+  <view class="amount-container card">
+    <text class="currency-symbol">¥</text>
+    <input 
+      class="amount-input" 
+      type="digit" 
+      placeholder="0.00" 
+      value="{{amount}}" 
+      bindinput="onAmountInput" 
+    />
+  </view>
+
+  <!-- Category Selection -->
+  <view class="category-container card">
+    <view class="category-grid">
+      <view 
+        class="category-item {{currentCategory === item.name ? 'active' : ''}}" 
+        wx:for="{{categories[currentType]}}" 
+        wx:key="name"
+        bindtap="selectCategory"
+        data-category="{{item.name}}"
+      >
+        <view class="category-icon">{{item.icon}}</view>
+        <text class="category-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Remark Input -->
+  <view class="remark-container card">
+    <text class="remark-label">备注</text>
+    <input 
+      class="remark-input" 
+      type="text" 
+      placeholder="写点什么吧..." 
+      value="{{remark}}" 
+      bindinput="onRemarkInput" 
+      maxlength="50"
+    />
+  </view>
+
+  <!-- Action Buttons -->
+  <view class="action-buttons">
+    <button class="btn-primary save-btn" bindtap="saveRecord">保存记录</button>
+  </view>
+
+  <!-- Voice Input Area -->
+  <view class="voice-container">
+    <view 
+      class="voice-btn {{isRecording ? 'recording' : ''}}" 
+      bindlongpress="startRecord" 
+      bindtouchend="stopRecord"
+    >
+      <image class="voice-icon" src="https://picsum.photos/50/50?random=1"></image>
+    </view>
+    <text class="voice-tips">{{isRecording ? '松开结束' : '长按语音记账'}}</text>
+  </view>
+</view>

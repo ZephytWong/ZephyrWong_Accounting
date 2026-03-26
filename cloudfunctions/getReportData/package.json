@@ -1,0 +1,14 @@
+{
+  "name": "get-report-data",
+  "version": "1.0.0",
+  "description": "Get accounting report data for a specific month",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

@@ -1,0 +1,136 @@
+.month-picker-container {
+  display: flex;
+  justify-content: center;
+  padding: 20rpx;
+}
+
+.picker-inner {
+  display: flex;
+  align-items: center;
+}
+
+.month-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-right: 10rpx;
+}
+
+.picker-icon {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666666;
+  margin-bottom: 10rpx;
+}
+
+.stat-value {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.stat-value.expense {
+  color: #ff4d4f;
+}
+
+.stat-value.income {
+  color: #07C160;
+}
+
+.stat-value.balance {
+  color: #333333;
+}
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  width: 100%;
+  text-align: left;
+}
+
+.pie-canvas {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 40rpx;
+}
+
+.category-list {
+  width: 100%;
+}
+
+.category-list-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eeeeee;
+}
+
+.category-list-item:last-child {
+  border-bottom: none;
+}
+
+.category-color {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.category-list-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.category-list-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-right: 30rpx;
+}
+
+.category-list-percent {
+  font-size: 24rpx;
+  color: #999999;
+  width: 80rpx;
+  text-align: right;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-img {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+}

@@ -1,0 +1,142 @@
+.type-switch {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  padding: 10rpx;
+}
+
+.type-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 32rpx;
+  color: #666666;
+  border-radius: 12rpx;
+}
+
+.type-item.active {
+  background-color: #07C160;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.amount-container {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 30rpx;
+}
+
+.currency-symbol {
+  font-size: 60rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+  color: #333333;
+}
+
+.amount-input {
+  flex: 1;
+  font-size: 80rpx;
+  height: 100rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30rpx;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+.category-item.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.category-item.active .category-icon {
+  background-color: #e6f9ef;
+  border-radius: 50%;
+}
+
+.category-icon {
+  font-size: 60rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+
+.category-name {
+  font-size: 24rpx;
+  color: #333333;
+}
+
+.remark-container {
+  display: flex;
+  align-items: center;
+}
+
+.remark-label {
+  width: 100rpx;
+  color: #666666;
+}
+
+.remark-input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.save-btn {
+  width: 100%;
+  height: 88rpx;
+  margin-top: 40rpx;
+}
+
+.voice-container {
+  margin-top: 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 40rpx;
+}
+
+.voice-btn {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
+  transition: all 0.2s;
+  margin-bottom: 20rpx;
+}
+
+.voice-btn.recording {
+  background-color: #ff4d4f;
+  transform: scale(1.1);
+}
+
+.voice-icon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+}
+
+.voice-tips {
+  font-size: 24rpx;
+  color: #999999;
+}
