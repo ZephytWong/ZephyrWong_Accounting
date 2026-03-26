@@ -1,6 +1,6 @@
 <view class="container">
   <!-- Month Picker -->
-  <view class="month-picker-container card">
+  <view class="month-picker-container card bounce-click" hover-class="bounce-active">
     <picker mode="date" fields="month" value="{{currentMonth}}" end="{{currentMonth}}" bindchange="onMonthChange">
       <view class="picker-inner">
         <text class="month-text">{{currentMonth}}</text>
@@ -10,40 +10,42 @@
   </view>
 
   <!-- Stats Cards -->
-  <view class="stats-container card">
-    <view class="stat-item">
+  <view class="stats-container">
+    <view class="stat-card card expense-card">
       <text class="stat-label">总支出</text>
-      <text class="stat-value expense">¥{{totalExpense}}</text>
+      <text class="stat-value">¥{{totalExpense}}</text>
     </view>
-    <view class="stat-item">
+    <view class="stat-card card income-card">
       <text class="stat-label">总收入</text>
-      <text class="stat-value income">¥{{totalIncome}}</text>
+      <text class="stat-value">¥{{totalIncome}}</text>
     </view>
-    <view class="stat-item">
+    <view class="stat-card card balance-card">
       <text class="stat-label">结余</text>
-      <text class="stat-value balance">¥{{balance}}</text>
+      <text class="stat-value">¥{{balance}}</text>
     </view>
   </view>
 
   <!-- Pie Chart -->
   <view class="chart-container card" wx:if="{{categoryData.length > 0}}">
-    <view class="chart-title">支出占比</view>
+    <view class="chart-title">支出占比 📊</view>
     <canvas type="2d" id="pieCanvas" class="pie-canvas"></canvas>
     
     <!-- Category List -->
     <view class="category-list">
-      <view class="category-list-item" wx:for="{{categoryData}}" wx:key="name">
-        <view class="category-color" style="background-color: {{colors[index % colors.length]}}"></view>
+      <view class="category-list-item bounce-click" hover-class="bounce-active" wx:for="{{categoryData}}" wx:key="name">
+        <view class="category-color" style="background-color: {{colors[index % colors.length]}}; border: 4rpx solid #2D3142; box-shadow: 2rpx 2rpx 0px #2D3142;"></view>
         <text class="category-list-name">{{item.name}}</text>
         <text class="category-list-value">¥{{item.value}}</text>
-        <text class="category-list-percent">{{item.percent}}%</text>
+        <view class="category-percent-badge" style="background-color: {{colors[index % colors.length]}}">
+          <text class="category-list-percent">{{item.percent}}%</text>
+        </view>
       </view>
     </view>
   </view>
 
   <!-- Empty State -->
-  <view class="empty-state" wx:if="{{categoryData.length === 0}}">
-    <image class="empty-img" src="https://picsum.photos/200/200?random=2"></image>
+  <view class="empty-state card" wx:if="{{categoryData.length === 0}}">
+    <view class="empty-icon">🤷‍♂️</view>
     <text class="empty-text">本月暂无支出记录</text>
   </view>
 </view>

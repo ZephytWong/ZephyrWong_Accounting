@@ -1,0 +1,57 @@
+/* theme-cartoon.wxss */
+page {
+  /* =========================================
+     卡通风格设计规范 - 亮色模式
+     ========================================= */
+  
+  /* 1. 全局色彩体系 (饱和度≥70%、明度≥60%) */
+  --color-primary: #FF6B6B;     /* 活泼红/珊瑚粉 */
+  --color-secondary: #FFE66D;   /* 明亮黄 */
+  --color-accent: #4ECDC4;      /* 清新青色 */
+  --color-danger: #EF476F;      /* 警示红 */
+  --color-success: #06D6A0;     /* 成功绿 */
+  
+  --color-bg: #F7F9FC;          /* 极浅灰蓝背景 */
+  --color-card-bg: #FFFFFF;     /* 卡片纯白 */
+  
+  --color-text-main: #2D3142;   /* 深色漫画描边/主文本 */
+  --color-text-sub: #9094A6;    /* 辅助说明文本 */
+
+  /* 2. 圆角规范 */
+  --radius-card: 32rpx;         /* 卡片圆角 16px */
+  --radius-btn: 24rpx;          /* 按钮圆角 12px */
+  --radius-avatar: 50%;         /* 头像完全圆角 */
+  --radius-input: 20rpx;        /* 输入框圆角 10px */
+
+  /* 3. 阴影与描边 (软阴影与高光) */
+  --border-thick: 4rpx solid #2D3142; /* 卡通粗描边 */
+  --shadow-cartoon: 6rpx 8rpx 0px rgba(45, 49, 66, 1); /* 漫画风硬阴影 */
+  --shadow-soft: 0 8rpx 24rpx rgba(0, 0, 0, 0.12); /* 2-4px 软阴影 */
+  --highlight-inner: inset 0 4rpx 0px rgba(255, 255, 255, 0.6); /* 顶部高光 */
+
+  /* 4. 字体规范 */
+  --font-cartoon: 'ZCOOL KuaiLe', 'Source Han Sans Heavy', 'Comic Sans MS', 'Fredoka One', 'PingFang SC', sans-serif;
+}
+
+/* =========================================
+   卡通风格设计规范 - 暗黑模式适配 (降饱和 20%)
+   ========================================= */
+@media (prefers-color-scheme: dark) {
+  page {
+    --color-primary: #E55353;
+    --color-secondary: #E5CF55;
+    --color-accent: #3BB5AC;
+    --color-danger: #D13F61;
+    --color-success: #05B588;
+    
+    --color-bg: #1A1C23;
+    --color-card-bg: #2D3142;
+    
+    --color-text-main: #F7F9FC;
+    --color-text-sub: #A0A5B5;
+
+    --border-thick: 4rpx solid #0F1115;
+    --shadow-cartoon: 6rpx 8rpx 0px rgba(15, 17, 21, 1);
+    --highlight-inner: inset 0 4rpx 0px rgba(255, 255, 255, 0.1);
+  }
+}

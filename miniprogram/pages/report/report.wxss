@@ -1,7 +1,8 @@
 .month-picker-container {
   display: flex;
   justify-content: center;
-  padding: 20rpx;
+  padding: 20rpx !important;
+  background-color: var(--color-secondary);
 }
 
 .picker-inner {
@@ -11,48 +12,55 @@
 
 .month-text {
   font-size: 36rpx;
-  font-weight: bold;
+  font-weight: 900;
   margin-right: 10rpx;
+  color: var(--color-text-main);
 }
 
 .picker-icon {
   font-size: 24rpx;
-  color: #999999;
+  color: var(--color-text-main);
 }
 
 .stats-container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.stat-item {
-  flex: 1;
+.stat-card {
+  width: 48%;
+  padding: 20rpx !important;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20rpx !important;
+}
+
+.balance-card {
+  width: 100%;
+  background-color: var(--color-secondary);
+}
+
+.expense-card {
+  background-color: #FF99C8; /* 卡通粉 */
+}
+
+.income-card {
+  background-color: var(--color-success);
 }
 
 .stat-label {
   font-size: 24rpx;
-  color: #666666;
+  font-weight: bold;
+  color: #2D3142;
   margin-bottom: 10rpx;
 }
 
 .stat-value {
-  font-size: 32rpx;
-  font-weight: bold;
-}
-
-.stat-value.expense {
-  color: #ff4d4f;
-}
-
-.stat-value.income {
-  color: #07C160;
-}
-
-.stat-value.balance {
-  color: #333333;
+  font-size: 36rpx;
+  font-weight: 900;
+  color: #2D3142;
 }
 
 .chart-container {
@@ -63,10 +71,11 @@
 
 .chart-title {
   font-size: 32rpx;
-  font-weight: bold;
+  font-weight: 900;
   margin-bottom: 30rpx;
   width: 100%;
   text-align: left;
+  color: var(--color-text-main);
 }
 
 .pie-canvas {
@@ -82,17 +91,17 @@
 .category-list-item {
   display: flex;
   align-items: center;
-  padding: 20rpx 0;
-  border-bottom: 1rpx solid #eeeeee;
-}
-
-.category-list-item:last-child {
-  border-bottom: none;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  background-color: var(--color-bg);
+  border: var(--border-thick);
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-cartoon);
 }
 
 .category-color {
-  width: 24rpx;
-  height: 24rpx;
+  width: 32rpx;
+  height: 32rpx;
   border-radius: 50%;
   margin-right: 20rpx;
 }
@@ -100,37 +109,44 @@
 .category-list-name {
   flex: 1;
   font-size: 28rpx;
-  color: #333333;
+  font-weight: bold;
+  color: var(--color-text-main);
 }
 
 .category-list-value {
-  font-size: 28rpx;
-  font-weight: bold;
-  margin-right: 30rpx;
+  font-size: 32rpx;
+  font-weight: 900;
+  margin-right: 20rpx;
+  color: var(--color-text-main);
+}
+
+.category-percent-badge {
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  border: 4rpx solid #2D3142;
 }
 
 .category-list-percent {
   font-size: 24rpx;
-  color: #999999;
-  width: 80rpx;
-  text-align: right;
+  font-weight: bold;
+  color: #2D3142;
 }
 
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100rpx 0;
+  padding: 100rpx 0 !important;
+  background-color: var(--color-card-bg);
 }
 
-.empty-img {
-  width: 200rpx;
-  height: 200rpx;
-  border-radius: 100rpx;
+.empty-icon {
+  font-size: 100rpx;
   margin-bottom: 30rpx;
 }
 
 .empty-text {
-  font-size: 28rpx;
-  color: #999999;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--color-text-sub);
 }

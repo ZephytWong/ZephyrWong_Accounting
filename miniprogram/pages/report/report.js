@@ -5,7 +5,8 @@ Page({
     totalExpense: 0,
     balance: 0,
     categoryData: [],
-    colors: ['#07C160', '#1890ff', '#fadb14', '#f5222d', '#722ed1', '#eb2f96', '#fa8c16', '#fa541c']
+    // Cartoon style palette
+    colors: ['#FF6B6B', '#FFE66D', '#4ECDC4', '#FF9F1C', '#A06CD5', '#FF99C8', '#42BFDD', '#C1FBA4']
   },
 
   onLoad() {

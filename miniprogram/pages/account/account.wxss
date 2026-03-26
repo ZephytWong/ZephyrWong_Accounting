@@ -1,46 +1,45 @@
 .type-switch {
   display: flex;
   justify-content: center;
-  margin-bottom: 30rpx;
-  background-color: #ffffff;
-  border-radius: 16rpx;
-  padding: 10rpx;
+  padding: 10rpx !important;
 }
 
 .type-item {
   flex: 1;
   text-align: center;
-  padding: 16rpx 0;
+  padding: 20rpx 0;
   font-size: 32rpx;
-  color: #666666;
-  border-radius: 12rpx;
+  color: var(--color-text-sub);
+  border-radius: var(--radius-btn);
+  font-weight: bold;
 }
 
 .type-item.active {
-  background-color: #07C160;
-  color: #ffffff;
-  font-weight: bold;
+  background-color: var(--color-secondary);
+  color: var(--color-text-main);
+  border: var(--border-thick);
+  box-shadow: inset 0 -4rpx 0 rgba(0,0,0,0.1);
 }
 
 .amount-container {
   display: flex;
   align-items: center;
-  padding: 40rpx 30rpx;
+  padding: 40rpx 30rpx !important;
 }
 
 .currency-symbol {
   font-size: 60rpx;
-  font-weight: bold;
+  font-weight: 900;
   margin-right: 20rpx;
-  color: #333333;
+  color: var(--color-text-main);
 }
 
 .amount-input {
   flex: 1;
   font-size: 80rpx;
   height: 100rpx;
-  font-weight: bold;
-  color: #333333;
+  font-weight: 900;
+  color: var(--color-text-main);
 }
 
 .category-grid {
@@ -54,58 +53,68 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 30rpx;
-  opacity: 0.6;
-  transition: all 0.2s;
+  opacity: 0.8;
 }
 
 .category-item.active {
   opacity: 1;
-  transform: scale(1.1);
 }
 
-.category-item.active .category-icon {
-  background-color: #e6f9ef;
-  border-radius: 50%;
-}
-
-.category-icon {
-  font-size: 60rpx;
+.category-icon-wrapper {
   width: 100rpx;
   height: 100rpx;
+  border-radius: var(--radius-avatar);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 10rpx;
+  background-color: var(--color-bg);
+  border: 4rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.category-item.active .category-icon-wrapper {
+  background-color: var(--color-accent);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-cartoon);
+}
+
+.category-icon {
+  font-size: 50rpx;
 }
 
 .category-name {
   font-size: 24rpx;
-  color: #333333;
+  font-weight: bold;
+  color: var(--color-text-main);
 }
 
 .remark-container {
   display: flex;
   align-items: center;
+  padding: 20rpx 30rpx !important;
 }
 
 .remark-label {
   width: 100rpx;
-  color: #666666;
+  font-weight: bold;
+  color: var(--color-text-main);
 }
 
 .remark-input {
   flex: 1;
   font-size: 28rpx;
+  color: var(--color-text-main);
 }
 
 .save-btn {
   width: 100%;
-  height: 88rpx;
-  margin-top: 40rpx;
+  height: 96rpx;
+  margin-top: 20rpx;
 }
 
 .voice-container {
-  margin-top: 60rpx;
+  margin-top: 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,28 +124,28 @@
 .voice-btn {
   width: 140rpx;
   height: 140rpx;
-  border-radius: 50%;
-  background-color: #ffffff;
+  border-radius: var(--radius-avatar);
+  background-color: var(--color-secondary);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-cartoon);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
-  transition: all 0.2s;
   margin-bottom: 20rpx;
 }
 
-.voice-btn.recording {
-  background-color: #ff4d4f;
-  transform: scale(1.1);
+.voice-emoji {
+  font-size: 60rpx;
 }
 
-.voice-icon {
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 30rpx;
+.voice-btn.recording {
+  background-color: var(--color-danger);
+  transform: scale(1.1);
+  box-shadow: 0 0 20rpx rgba(239, 71, 111, 0.5);
 }
 
 .voice-tips {
   font-size: 24rpx;
-  color: #999999;
+  font-weight: bold;
+  color: var(--color-text-sub);
 }
