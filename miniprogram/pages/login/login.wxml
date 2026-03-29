@@ -1,0 +1,56 @@
+<view class="container login-container">
+  <view class="login-card card">
+    <view class="login-header">
+      <view class="logo-wrapper">
+        <text class="logo-emoji">💰</text>
+      </view>
+      <text class="app-name">卡通记账本</text>
+      <text class="app-desc">轻松记录每一笔开销</text>
+    </view>
+
+    <view class="login-actions">
+      <view class="input-group">
+        <text class="input-icon">👤</text>
+        <input 
+          class="custom-input" 
+          placeholder="请输入用户名" 
+          model:value="{{username}}"
+          bindinput="onUsernameInput"
+        />
+      </view>
+      
+      <view class="input-group">
+        <text class="input-icon">🔑</text>
+        <input 
+          class="custom-input" 
+          password="true" 
+          placeholder="请输入密码" 
+          model:value="{{password}}"
+          bindinput="onPasswordInput"
+        />
+      </view>
+
+      <button 
+        class="btn-primary bounce-click login-btn" 
+        hover-class="bounce-active"
+        bindtap="handleLogin"
+      >
+        <text class="btn-icon">登 录</text>
+      </button>
+
+      <button 
+        class="btn-secondary bounce-click register-btn" 
+        hover-class="bounce-active"
+        bindtap="handleRegister"
+      >
+        <text class="btn-icon">注 册</text>
+      </button>
+      
+      <text class="login-tips">基于 Supabase 的账号密码登录</text>
+    </view>
+  </view>
+
+  <!-- Decorative Elements -->
+  <view class="deco-circle circle-1"></view>
+  <view class="deco-circle circle-2"></view>
+</view>

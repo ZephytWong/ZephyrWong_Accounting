@@ -48,12 +48,17 @@ Page({
     const endDate = `${nextYear}-${String(nextMonth).padStart(2, '0')}-01`
 
     try {
-      const mockUserId = 'test-user-123'
+      const userInfo = wx.getStorageSync('userInfo')
+      if (!userInfo || !userInfo.user_id) {
+        wx.showToast({ title: '请先登录', icon: 'none' })
+        wx.hideLoading()
+        return
+      }
       
       const { data: records, error } = await supabase
         .from('records')
         .select('*')
-        .eq('user_id', mockUserId)
+        .eq('user_id', userInfo.user_id)
         .gte('date', startDate)
         .lt('date', endDate)
         .limit(1000)

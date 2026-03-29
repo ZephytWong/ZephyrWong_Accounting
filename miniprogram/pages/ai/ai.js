@@ -1,5 +1,11 @@
 import { supabase } from '../../utils/supabase'
 
+// Configuration for DeepSeek API
+// Note: In a real production app, you should NOT expose your API key in the frontend.
+// It is recommended to use a Supabase Edge Function to proxy the request to DeepSeek.
+const DEEPSEEK_API_KEY = 'sk-5c3b868f628649208a2353d249ab141f' // Please replace this with your actual key
+const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions'
+
 Page({
   data: {
     currentMonth: '',
@@ -43,12 +49,17 @@ Page({
     const endDate = `${nextYear}-${String(nextMonth).padStart(2, '0')}-01`
 
     try {
-      const mockUserId = 'test-user-123'
+      const userInfo = wx.getStorageSync('userInfo')
+      if (!userInfo || !userInfo.user_id) {
+        wx.showToast({ title: '请先登录', icon: 'none' })
+        wx.hideLoading()
+        return
+      }
       
       const { data: records, error } = await supabase
         .from('records')
         .select('*')
-        .eq('user_id', mockUserId)
+        .eq('user_id', userInfo.user_id)
         .gte('date', startDate)
         .lt('date', endDate)
         .limit(1000)
@@ -75,58 +86,100 @@ Page({
         })
       }
 
-      // Generate mock advice based on Supabase data
-      let advices = []
+      // Generate advice using DeepSeek API
+      const prompt = `用户本月收入${totalIncome}元，支出${totalExpense}元，其中分类支出为${JSON.stringify(categoryMap)}。请用生动、幽默的卡通人物口吻给出3条简短的理财建议。每条建议用回车分隔。`
 
-      if (totalExpense === 0) {
-        advices.push("您本月还没有支出记录，继续保持良好的消费习惯！")
-        advices.push("记得及时记录每一笔花销，让财务状况更清晰。")
-      } else {
-        if (totalExpense > totalIncome && totalIncome > 0) {
-          advices.push("⚠️ 警告：本月支出已超过收入！请注意控制消费，避免债务累积。")
-        } else if (totalExpense < totalIncome * 0.5) {
-          advices.push("👍 您的储蓄率很高，可以考虑将部分闲置资金用于稳健型理财。")
-        }
-
-        let maxCategory = ''
-        let maxAmount = 0
-        for (const [cat, amt] of Object.entries(categoryMap)) {
-          if (amt > maxAmount) {
-            maxAmount = amt
-            maxCategory = cat
+      wx.request({
+        url: DEEPSEEK_API_URL,
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+        },
+        data: {
+          model: "deepseek-chat",
+          messages: [
+            {
+              role: "system",
+              content: "你是一个精明但幽默的财务小助手，擅长给用户提供记账和理财建议。请用非常生动活泼的口吻说话。"
+            },
+            {
+              role: "user",
+              content: prompt
+            }
+          ]
+        },
+        success: (res) => {
+          wx.hideLoading()
+          if (res.statusCode === 200 && res.data && res.data.choices && res.data.choices.length > 0) {
+            const adviceText = res.data.choices[0].message.content
+            // Split by newline and filter out empty lines
+            const advices = adviceText.split('\n').filter(item => item.trim() !== '')
+            this.setData({ advices: advices.slice(0, 3) })
+          } else {
+            console.error('DeepSeek API Error:', res.data)
+            this.handleFallbackAdvice(totalExpense, totalIncome, categoryMap)
           }
+        },
+        fail: (err) => {
+          console.error('DeepSeek API Request Fail:', err)
+          this.handleFallbackAdvice(totalExpense, totalIncome, categoryMap)
         }
-
-        if (maxCategory) {
-          advices.push(`📊 本月在【${maxCategory}】上花费最多（${maxAmount}元），可以审视一下这部分是否包含非必要支出。`)
-        }
-
-        if (categoryMap['餐饮'] && categoryMap['餐饮'] > totalExpense * 0.4) {
-          advices.push("🍔 餐饮支出占比较高，尝试自己做饭可以省下不少钱哦。")
-        }
-
-        if (categoryMap['购物'] && categoryMap['购物'] > totalExpense * 0.3) {
-          advices.push("🛍️ 购物支出较大，建议在下单前实施'冷却期'策略，避免冲动消费。")
-        }
-      }
-
-      if (advices.length === 0) {
-        advices.push("您的消费结构很健康，继续保持记账的好习惯！")
-        advices.push("合理规划预算，让每一分钱都发挥价值。")
-        advices.push("建立应急基金，以备不时之需。")
-      }
-
-      while (advices.length < 3) {
-        advices.push("理财第一步是记账，坚持下去您会看到改变。")
-      }
-
-      wx.hideLoading()
-      this.setData({ advices: advices.slice(0, 3) })
+      })
 
     } catch (err) {
       wx.hideLoading()
       wx.showToast({ title: '请求失败', icon: 'none' })
       console.error('getAiAdvice fail', err)
     }
+  },
+
+  handleFallbackAdvice(totalExpense, totalIncome, categoryMap) {
+    wx.hideLoading()
+    let advices = []
+
+    if (totalExpense === 0) {
+      advices.push("您本月还没有支出记录，继续保持良好的消费习惯！")
+      advices.push("记得及时记录每一笔花销，让财务状况更清晰。")
+    } else {
+      if (totalExpense > totalIncome && totalIncome > 0) {
+        advices.push("⚠️ 警告：本月支出已超过收入！请注意控制消费，避免债务累积。")
+      } else if (totalExpense < totalIncome * 0.5) {
+        advices.push("👍 您的储蓄率很高，可以考虑将部分闲置资金用于稳健型理财。")
+      }
+
+      let maxCategory = ''
+      let maxAmount = 0
+      for (const [cat, amt] of Object.entries(categoryMap)) {
+        if (amt > maxAmount) {
+          maxAmount = amt
+          maxCategory = cat
+        }
+      }
+
+      if (maxCategory) {
+        advices.push(`📊 本月在【${maxCategory}】上花费最多（${maxAmount}元），可以审视一下这部分是否包含非必要支出。`)
+      }
+
+      if (categoryMap['餐饮'] && categoryMap['餐饮'] > totalExpense * 0.4) {
+        advices.push("🍔 餐饮支出占比较高，尝试自己做饭可以省下不少钱哦。")
+      }
+
+      if (categoryMap['购物'] && categoryMap['购物'] > totalExpense * 0.3) {
+        advices.push("🛍️ 购物支出较大，建议在下单前实施'冷却期'策略，避免冲动消费。")
+      }
+    }
+
+    if (advices.length === 0) {
+      advices.push("您的消费结构很健康，继续保持记账的好习惯！")
+      advices.push("合理规划预算，让每一分钱都发挥价值。")
+      advices.push("建立应急基金，以备不时之需。")
+    }
+
+    while (advices.length < 3) {
+      advices.push("理财第一步是记账，坚持下去您会看到改变。")
+    }
+
+    this.setData({ advices: advices.slice(0, 3) })
   }
 })

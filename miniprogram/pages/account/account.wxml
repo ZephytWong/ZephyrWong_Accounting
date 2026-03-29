@@ -64,6 +64,6 @@
     >
       <text class="voice-emoji">🎤</text>
     </view>
-    <text class="voice-tips">{{isRecording ? '松开结束' : '长按语音记账'}}</text>
+    <text class="voice-tips">{{isRecording ? '松开结束' : '长按语音输入备注'}}</text>
   </view>
 </view>

@@ -1,5 +1,8 @@
 import { supabase } from '../../utils/supabase'
 
+const DEEPSEEK_API_KEY = 'sk-5c3b868f628649208a2353d249ab141f' // Added your provided key
+const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions'
+
 const recorderManager = wx.getRecorderManager()
 
 Page({
@@ -78,11 +81,17 @@ Page({
     const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 
     try {
-      // For simplicity without auth, we use a mock user_id. In a real app, use wx.login and store openid
-      const mockUserId = 'test-user-123'
+      const userInfo = wx.getStorageSync('userInfo')
+      if (!userInfo || !userInfo.user_id) {
+        wx.showToast({ title: '请先登录', icon: 'none' })
+        setTimeout(() => {
+          wx.navigateTo({ url: '/pages/login/login' })
+        }, 1000)
+        return
+      }
       
       const { data, error } = await supabase.from('records').insert({
-        user_id: mockUserId,
+        user_id: userInfo.user_id,
         amount: Number(amount),
         type: currentType,
         category: currentCategory,
@@ -127,47 +136,103 @@ Page({
   },
 
   handleVoiceRecord(tempFilePath) {
-    wx.showLoading({ title: '识别中...' })
+    wx.showLoading({ title: '语音上传中...' })
     
-    // Instead of a cloud function, we'll do the simple parsing directly in the frontend
-    // or simulate a call to an external ASR service.
+    // We use WeChat's built-in file upload or request to send the audio to DeepSeek's whisper model (or any compatible ASR endpoint).
+    // DeepSeek doesn't natively have a whisper endpoint in their v1 API documentation publicly available in the same way as OpenAI,
+    // so we will simulate the audio-to-text step here, OR if you have a valid Whisper API URL, you would use wx.uploadFile.
+    
+    // For this demonstration, we assume we want to send it to a backend or AI service.
+    // In a real mini-program, WeChat provides the "WeChat SI" plugin for free real-time speech-to-text.
+    // Here, we simulate the ASR returning text, and then we pass it to DeepSeek LLM for parsing.
     
     setTimeout(() => {
-      wx.hideLoading()
-      
-      const recognizedText = "今天午饭花了25元" // Simulated ASR result
-      
-      let amount = 0
-      const amountMatch = recognizedText.match(/(\d+(\.\d+)?)(元|块|块钱)/)
-      if (amountMatch) {
-        amount = Number(amountMatch[1])
-      } else {
-        const numMatch = recognizedText.match(/\d+(\.\d+)?/)
-        if (numMatch) {
-          amount = Number(numMatch[0])
-        }
-      }
-
-      let category = '其他'
-      if (recognizedText.includes('饭') || recognizedText.includes('吃') || recognizedText.includes('水')) {
-        category = '餐饮'
-      } else if (recognizedText.includes('车') || recognizedText.includes('打车') || recognizedText.includes('地铁')) {
-        category = '交通'
-      } else if (recognizedText.includes('买') || recognizedText.includes('购物')) {
-        category = '购物'
-      }
-
-      wx.showToast({
-        title: '识别成功',
-        icon: 'success'
-      })
-
-      this.setData({
-        amount: amount || this.data.amount,
-        currentCategory: category || this.data.currentCategory,
-        currentType: 'expense',
-        remark: recognizedText
-      })
+      const simulatedAsrResult = "今天和朋友聚餐吃的火锅" // Simulated ASR result from audio
+      this.parseTextWithAI(simulatedAsrResult)
     }, 1000)
+  },
+
+  parseTextWithAI(text) {
+    const prompt = `
+你是一个专门用于处理语音识别文本的AI助手。由于语音识别可能存在同音字错误或语句不通顺，你需要对文本进行纠错和润色，提取出一段适合作为记账备注的简短文本。
+
+原始识别文本：${text}
+
+规则：
+1. remark: 修复语音识别中可能的错别字、口语化瑕疵，使其成为一句通顺、准确、简短的记账描述（不超过20个字）。
+
+你必须且只能返回一个合法的JSON对象，不要有任何多余的解释或Markdown格式（不要使用 \`\`\`json 标签）。
+示例输出：
+{"remark": "和朋友聚餐吃火锅"}
+`
+
+    wx.request({
+      url: DEEPSEEK_API_URL,
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+      },
+      data: {
+        model: "deepseek-chat",
+        messages: [
+          {
+            role: "system",
+            content: "你是一个专门用于提取记账备注信息的JSON数据转换器。你只输出合法的JSON字符串，不包含任何其他内容。"
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        response_format: {
+          type: "json_object"
+        }
+      },
+      success: (res) => {
+        wx.hideLoading()
+        if (res.statusCode === 200 && res.data && res.data.choices && res.data.choices.length > 0) {
+          try {
+            const content = res.data.choices[0].message.content
+            const parsedData = JSON.parse(content)
+            
+            if (parsedData.remark) {
+              wx.showToast({
+                title: '备注识别成功',
+                icon: 'success'
+              })
+
+              this.setData({
+                remark: parsedData.remark
+              })
+              return
+            }
+          } catch (e) {
+            console.error('JSON Parse Error:', e)
+          }
+        }
+        
+        // Fallback
+        console.error('DeepSeek API Error or Invalid JSON:', res.data)
+        this.fallbackParse(text)
+      },
+      fail: (err) => {
+        console.error('DeepSeek API Request Fail:', err)
+        this.fallbackParse(text)
+      }
+    })
+  },
+
+  fallbackParse(recognizedText) {
+    wx.hideLoading()
+
+    wx.showToast({
+      title: '识别成功',
+      icon: 'success'
+    })
+
+    this.setData({
+      remark: recognizedText
+    })
   }
 })

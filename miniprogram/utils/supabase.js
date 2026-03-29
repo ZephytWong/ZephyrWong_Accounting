@@ -73,6 +73,29 @@ export const supabase = {
         }
       }
       return chain
+    },
+    upsert: (data) => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          // Prefer POST for upsert in postgrest, but requires on_conflict parameter if needed.
+          // For simplicity in this mock wrapper, we'll just use POST and let Supabase handle if PK exists
+          url: `${SUPABASE_URL}/rest/v1/${table}`,
+          method: 'POST',
+          header: {
+            ...getHeaders(),
+            'Prefer': 'resolution=merge-duplicates' // Tell PostgREST to upsert
+          },
+          data: data,
+          success: (res) => {
+            if (res.statusCode >= 200 && res.statusCode < 300) {
+              resolve({ data: res.data, error: null })
+            } else {
+              resolve({ data: null, error: res.data })
+            }
+          },
+          fail: (err) => reject(err)
+        })
+      })
     }
   }),
   functions: {
