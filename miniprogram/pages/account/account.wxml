@@ -53,17 +53,4 @@
   <view class="action-buttons">
     <button class="btn-primary save-btn bounce-click" hover-class="bounce-active" bindtap="saveRecord">保存记录</button>
   </view>
-
-  <!-- Voice Input Area -->
-  <view class="voice-container">
-    <view 
-      class="voice-btn bounce-click {{isRecording ? 'recording' : ''}}" 
-      hover-class="bounce-active"
-      bindlongpress="startRecord" 
-      bindtouchend="stopRecord"
-    >
-      <text class="voice-emoji">🎤</text>
-    </view>
-    <text class="voice-tips">{{isRecording ? '松开结束' : '长按语音输入备注'}}</text>
-  </view>
 </view>

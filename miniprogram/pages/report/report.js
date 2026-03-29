@@ -38,7 +38,9 @@ Page({
     const month = this.data.currentMonth
     const startDate = `${month}-01`
     
-    let [year, m] = month.split('-')
+    let parts = month.split('-')
+    let year = parts[0]
+    let m = parts[1]
     let nextMonth = parseInt(m) + 1
     let nextYear = parseInt(year)
     if (nextMonth > 12) {

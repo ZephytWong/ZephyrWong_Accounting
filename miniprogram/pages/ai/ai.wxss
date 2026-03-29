@@ -1,3 +1,26 @@
+.bottom-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 40rpx;
+  padding-bottom: 40rpx;
+}
+
+.logout-btn {
+  width: 80%;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 32rpx;
+  font-weight: 900;
+  background-color: var(--color-danger);
+  color: #fff;
+  border-radius: var(--radius-btn);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-cartoon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .month-picker-container {
   display: flex;
   justify-content: center;

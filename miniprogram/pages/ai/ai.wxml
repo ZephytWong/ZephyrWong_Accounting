@@ -46,4 +46,9 @@
     <view class="empty-icon">💤</view>
     <text class="empty-text">本月还没有分析数据哦</text>
   </view>
+
+  <!-- Bottom Actions -->
+  <view class="bottom-actions">
+    <button class="logout-btn bounce-click" hover-class="bounce-active" bindtap="handleLogout">退出登录</button>
+  </view>
 </view>

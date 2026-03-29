@@ -34,12 +34,29 @@ Page({
     })
   },
 
+  handleLogout() {
+    wx.showModal({
+      title: '提示',
+      content: '确定要退出登录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.removeStorageSync('userInfo')
+          wx.reLaunch({
+            url: '/pages/login/login'
+          })
+        }
+      }
+    })
+  },
+
   async fetchAiAdvice() {
     wx.showLoading({ title: 'AI分析中...' })
     const month = this.data.currentMonth
     const startDate = `${month}-01`
     
-    let [year, m] = month.split('-')
+    let parts = month.split('-')
+    let year = parts[0]
+    let m = parts[1]
     let nextMonth = parseInt(m) + 1
     let nextYear = parseInt(year)
     if (nextMonth > 12) {
@@ -150,7 +167,10 @@ Page({
 
       let maxCategory = ''
       let maxAmount = 0
-      for (const [cat, amt] of Object.entries(categoryMap)) {
+      const entries = Object.keys(categoryMap)
+      for (let i = 0; i < entries.length; i++) {
+        const cat = entries[i]
+        const amt = categoryMap[cat]
         if (amt > maxAmount) {
           maxAmount = amt
           maxCategory = cat
